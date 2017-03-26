@@ -1,13 +1,13 @@
 package com.luisdeol;
-import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 /**
  * Created by luisdeol on 25/03/17.
  */
+
 public final class CsvReaderAndWriter {
     //Delimiter used in CSV file
     private static final String COMMA_DELIMITER = ",";

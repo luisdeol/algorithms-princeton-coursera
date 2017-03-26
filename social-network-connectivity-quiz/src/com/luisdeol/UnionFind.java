@@ -1,6 +1,5 @@
 package com.luisdeol;
 
-
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 
@@ -11,16 +10,16 @@ import java.util.IntSummaryStatistics;
 public class UnionFind {
     private static final String fileName = "friendships.csv";
     int id[];
-    int zs[];
+    int friendNetwork[];
     int length;
 
     public UnionFind(int n){
         id = new int[n];
-        zs = new int[n];
+        friendNetwork = new int[n];
         length = n;
         for (int i = 0; i < n; i++){
             id[i] = i;
-            zs[i] = 1;
+            friendNetwork[i] = 1;
         }
 
     }
@@ -40,26 +39,22 @@ public class UnionFind {
         int rootQ = root(q);
 
         if (rootP == rootQ) return;
-        if (zs[rootP] < zs[rootQ]){
+        if (friendNetwork[rootP] < friendNetwork[rootQ]){
 
             id[rootP] = rootQ;
-            zs[rootQ] += zs[rootP];
-            System.out.println("zs do root" + Integer.toString(rootQ)+" é "+Integer.toString(zs[rootQ]));
+            friendNetwork[rootQ] += friendNetwork[rootP];
             CsvReaderAndWriter.WriteCsvFile(fileName, p, q);
         }
         else {
             id[rootQ] = rootP;
-            zs[rootP] += zs[rootQ];
-            System.out.println("zs do root" + Integer.toString(rootP)+" é "+Integer.toString(zs[rootP]));
+            friendNetwork[rootP] += friendNetwork[rootQ];
 
             CsvReaderAndWriter.WriteCsvFile(fileName, p, q);
         }
     }
 
-    // Is it faster to compare all in an array to N or to find the max value then compare to N?
     public boolean allConnected(){
-        IntSummaryStatistics stat = Arrays.stream(zs).summaryStatistics();
-        System.out.println(stat.getMax());
+        IntSummaryStatistics stat = Arrays.stream(friendNetwork).summaryStatistics();
         return stat.getMax()== length;
     }
 }
